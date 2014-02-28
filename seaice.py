@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 from pyhdf import SD
+import matplotlib.pyplot as plt
+import numpy as np
+import datetime
 
 #File names
 amsr_name = 'AMSR_E_L2A_BrightnessTemperatures_V10_201012141724_D.hdf'
@@ -25,7 +28,17 @@ for x, t_b_18_7v_list in enumerate(t_b_18_7v_grid):
 
 #Reading Calipso level 1 data
 
-tab532 = l1.select('Total_Attenuated_Backscatter_532')
-pab532 = l1.select('Perpendicular_Attenuated_Backscatter_532')
+l1utc = l1.select('Profile_UTC_Time')
+l1tab532 = l1.select('Total_Attenuated_Backscatter_532')
+l1pab532 = l1.select('Perpendicular_Attenuated_Backscatter_532')
 l1lon = l1.select('Longitude')
 l1lat = l1.select('Latitude')
+
+#Reading Calipso level 2 data
+# Infrared Radiometer (IIR) Data
+
+l2utc = l2.select('Profile_UTC_Time')
+l2lse = l2.select('Lidar_Surface_Elevation')
+
+#Calipso Analysis
+
