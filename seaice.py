@@ -13,7 +13,13 @@ l2 = SD.SD(callid2_name)
 
 #Reading Calipso level 1 data
 
+l1utc = l1.select('Profile_UTC_Time')
 tab532 = l1.select('Total_Attenuated_Backscatter_532')
 pab532 = l1.select('Perpendicular_Attenuated_Backscatter_532')
 l1lon = l1.select('Longitude')
 l1lat = l1.select('Latitude')
+
+#Reading Calipso level 2 data
+
+l2utc = l2.select('Profile_UTC_Time')
+lse = l2.select('Lidar_Surface_Elevation')
