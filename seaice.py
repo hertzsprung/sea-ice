@@ -14,6 +14,18 @@ amsr = SD.SD(amsr_name)
 l1 = SD.SD(callid1_name)
 l2 = SD.SD(callid2_name)
 
+
+#Read AMSR-E
+t_b_18_7v_grid = amsr.select("18.7V_Res.1_TB").get()
+t_b_18_7h_grid = amsr.select("18.7H_Res.1_TB").get()
+t_b_36_5v_grid = amsr.select("36.5V_Res.1_TB").get()
+
+print '#x, y, 18_7v, 36_5v, 18_5h'
+
+for x, t_b_18_7v_list in enumerate(t_b_18_7v_grid):
+	for y, t_b_18_7v in enumerate(t_b_18_7v_list):
+		print x, y, t_b_18_7v, t_b_36_5v_grid[x][y], t_b_18_7h_grid[x][y]
+
 #Reading Calipso level 1 data
 
 l1utc = l1.select('Profile_UTC_Time')
@@ -31,6 +43,7 @@ l2lse = l2.select('Lidar_Surface_Elevation')
 # Calipso Analysis
 # focus on UTC: 17.4-17.5 UTC
 
+<<<<<<< HEAD
 l2time = (l2utc[:] - l2utc[:].astype(int))*24.0	#UTC time in hours
 l2time_index = [i for i, x in enumerate(l1time) if x > 17.4 and x < 17.5]
 l2time_min = min(l2time_index)
@@ -53,3 +66,5 @@ l1lat_r = l1lat[l2time_min:l2time_max]
 
 #------------------------------
 #Reading AMSR-E data
+=======
+>>>>>>> FETCH_HEAD
