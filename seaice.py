@@ -28,8 +28,27 @@ l1lat = l1.select('Latitude')
 l2utc = l2.select('Profile_UTC_Time')
 l2lse = l2.select('Lidar_Surface_Elevation')
 
-#Calipso Analysis
+# Calipso Analysis
+# focus on UTC: 17.4-17.5 UTC
 
+l2time = (l2utc[:] - l2utc[:].astype(int))*24.0	#UTC time in hours
+l2time_index = [i for i, x in enumerate(l1time) if x > 17.4 and x < 17.5]
+l2time_min = min(l2time_index)
+l2time_max = max(l2time_index)
+
+# Select 17.4-17.5 UTC data
+l2time_r = l2time[l2time_min:l2time_max]
+l2lse_r = l2lse[l2time_min:l2time_max]
+
+l1tab532_r = l1tab532[l2time_min:l2time_max]
+l1pab532_r = l1pab532[l2time_min:l2time_max]
+l1lon_r = l1lon[l2time_min:l2time_max]
+l1lat_r = l1lat[l2time_min:l2time_max]
+
+
+# time_utc_l2 = (time_prof_l2-long(time_prof_l2))*24.0 ; time in UTC (hours)
+#     z = where( abs(time_utc_l2-17.45) le 0.5, n1)
+#     if (n1 gt 0) then surf_elv = surf_elv(*,z)
 
 
 #------------------------------
