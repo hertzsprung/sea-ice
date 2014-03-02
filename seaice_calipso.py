@@ -4,6 +4,7 @@ from pyhdf import SD
 import matplotlib.pyplot as plt
 import numpy as np
 import datetime
+from mpl_toolkits.basemap import Basemap, cm
 
 #File names
 amsr_name = 'AMSR_E_L2A_BrightnessTemperatures_V10_201012141724_D.hdf'
@@ -33,7 +34,7 @@ l2lse = l2.select('Lidar_Surface_Elevation')
 # focus on UTC: 17.4-17.5 UTC
 
 l2time = (l2utc[:] - l2utc[:].astype(int))*24.0	#UTC time in hours
-l2time_index = [i for i, x in enumerate(l1time) if x > 17.4 and x < 17.5]
+l2time_index = [i for i, x in enumerate(l2time) if x >= 17.4 and x <= 17.5]
 l2time_min = min(l2time_index)
 l2time_max = max(l2time_index)
 
@@ -51,3 +52,16 @@ l1lat_r = l1lat[l2time_min:l2time_max]
 #     z = where( abs(time_utc_l2-17.45) le 0.5, n1)
 #     if (n1 gt 0) then surf_elv = surf_elv(*,z)
 
+#----------------------
+# Draw map
+
+latmin = np.min(l1lat_r) - 0.02
+latmax = np.max(l1lat_r) + 0.02
+lonmin = np.min(l1lon_r) - 0.02
+lonmax = np.max(l1lon_r) + 0.02
+latts = (latmax + latmin)/2
+
+m = Basemap(projection='merc',llcrnrlat=latmin,urcrnrlat=latmax,\
+            llcrnrlon=lonmin,urcrnrlon=lonmax,lat_ts=latts,resolution='i')
+m.drawcoastlines()
+plt.show()
