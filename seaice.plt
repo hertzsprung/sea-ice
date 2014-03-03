@@ -6,8 +6,10 @@ set view map
 GR(t_b_18_7v, t_b_36_5v) = (t_b_36_5v - t_b_18_7v) / (t_b_36_5v + t_b_18_7v)
 PR(t_b_18_7h, t_b_18_7v) = (t_b_18_7v - t_b_18_7h) / (t_b_18_7v + t_b_18_7h)
 
-set output "gr.eps"
-splot 'amsre.dat' using 1:2:(GR($3, $4)) with image
-
 set output "pr.eps"
-splot 'amsre.dat' using 1:2:(PR($5, $3)) with image
+plot 'amsre.dat' using 7:6:(PR($5, $3)) with points palette pointtype 0, \
+ 'world.dat' with lines lt 3
+
+set output "gr.eps"
+plot 'amsre.dat' using 7:6:(GR($4, $3)) with points palette pointtype 0, \
+ 'world.dat' with lines lt 3
