@@ -47,6 +47,40 @@ l1pab532_r = l1pab532[l2time_min:l2time_max]
 l1lon_r = l1lon[l2time_min:l2time_max]
 l1lat_r = l1lat[l2time_min:l2time_max]
 
+height = range(289,583)
+x, y = np.meshgrid(l2time_r,height)
+tab = l1tab532_r[:,289:583]
+# print "Plotting data..."
+# plt.pcolor(x,y,l1tab532_r.T)
+# print "..done"
+# plt.show()
+
+# plt.contourf(x[::10],y[::10],l1tab532_r[::10])
+
+# Write to txt
+# print "Writing lat..."
+# out = open('lat','w')
+# for item in l1lat_r[:]:
+#      out.write("%s\n" % item)
+# out.close
+#
+# print "Writing lon..."
+# out = open('lon','w')
+# for item in l1lon_r[:]:
+#      out.write("%s\n" % item, )
+# out.close
+#
+# print "Writing tab..."
+# out = open('tab532','w')
+# for item in l1tab532_r[:,1]:
+#      out.write("%s\n" % item)
+# out.close
+#
+# print "Writing pab..."
+# out = open('pab532','w')
+# for item in l1pab532_r[:,1]:
+#      out.write("%s\n" % item)
+# out.close
 
 # time_utc_l2 = (time_prof_l2-long(time_prof_l2))*24.0 ; time in UTC (hours)
 #     z = where( abs(time_utc_l2-17.45) le 0.5, n1)
@@ -55,13 +89,13 @@ l1lat_r = l1lat[l2time_min:l2time_max]
 #----------------------
 # Draw map
 
-latmin = np.min(l1lat_r) - 0.02
-latmax = np.max(l1lat_r) + 0.02
-lonmin = np.min(l1lon_r) - 0.02
-lonmax = np.max(l1lon_r) + 0.02
-latts = (latmax + latmin)/2
-
-m = Basemap(projection='merc',llcrnrlat=latmin,urcrnrlat=latmax,\
-            llcrnrlon=lonmin,urcrnrlon=lonmax,lat_ts=latts,resolution='i')
-m.drawcoastlines()
-plt.show()
+# latmin = np.min(l1lat_r) - 0.02
+# latmax = np.max(l1lat_r) + 0.02
+# lonmin = np.min(l1lon_r) - 0.02
+# lonmax = np.max(l1lon_r) + 0.02
+# latts = (latmax + latmin)/2
+#
+# m = Basemap(projection='merc',llcrnrlat=latmin,urcrnrlat=latmax,\
+#             llcrnrlon=lonmin,urcrnrlon=lonmax,lat_ts=latts,resolution='i')
+# m.drawcoastlines()
+# plt.show()
