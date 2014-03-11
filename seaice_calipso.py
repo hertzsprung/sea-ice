@@ -47,9 +47,16 @@ l1pab532_r = l1pab532[l2time_min:l2time_max]
 l1lon_r = l1lon[l2time_min:l2time_max]
 l1lat_r = l1lat[l2time_min:l2time_max]
 
-height = range(289,583)
+par532 = l1tab532_r[:,289:583] - l1pab532_r[:,289:583]  #Parallel attenuated backscatter for altitude bins 289-583 (-2 to 8.3 km)
+
+spar532 = np.sum(par532, axis=1) #Sum par532 over height range
+
+sperp532 = np.sum(l1pab532_r[:,289:583], axis=1) #Sum perpedicular backscatter for same altitude bins
+
+ratio = sperp532 / spar532
+
+height = range(0,583)
 x, y = np.meshgrid(l2time_r,height)
-tab = l1tab532_r[:,289:583]
 # print "Plotting data..."
 # plt.pcolor(x,y,l1tab532_r.T)
 # print "..done"
@@ -87,15 +94,3 @@ tab = l1tab532_r[:,289:583]
 #     if (n1 gt 0) then surf_elv = surf_elv(*,z)
 
 #----------------------
-# Draw map
-
-# latmin = np.min(l1lat_r) - 0.02
-# latmax = np.max(l1lat_r) + 0.02
-# lonmin = np.min(l1lon_r) - 0.02
-# lonmax = np.max(l1lon_r) + 0.02
-# latts = (latmax + latmin)/2
-#
-# m = Basemap(projection='merc',llcrnrlat=latmin,urcrnrlat=latmax,\
-#             llcrnrlon=lonmin,urcrnrlon=lonmax,lat_ts=latts,resolution='i')
-# m.drawcoastlines()
-# plt.show()
