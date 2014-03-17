@@ -18,21 +18,43 @@ set palette defined ( 0 '#FFFFD9',\
 		      7 '#0C2C84' )
 #set palette negative
 
-set output "ice-extent.png"
+set output "ice-fy.png"
 set xrange [-180:180]
 set yrange [-90:90]
 #plot 'amsre.dat' using 2:1:3 with points palette pointtype 0, \
-# 'world.dat' with lines lt 3
+# 'world_10m.txt' with lines lt 3
 
-#set output "ice-age.png"
-#plot 'amsre.dat' using 2:1:($3*$4) with points palette pointtype 0, \
-# 'world.dat' with lines lt 3
+#set output "ice-my.png"
+#plot 'amsre.dat' using 2:1:4 with points palette pointtype 0, \
+# 'world_10m.txt' with lines lt 3
 
-set output "ice-extent-zoom.png"
+set output "ice-total.png"
+plot 'amsre.dat' using 2:1:($3+$4) with points palette pointtype 0, \
+ 'world_10m.txt' with lines lt 3
+
+#set output "ice-extent-zoom.png"
+#set xrange [-110:-80]
+#set yrange [75:80]
+#plot spatial_filter.'amsre.dat' using 2:1:3 with points palette pointtype 7 pointsize 3, \
+# 'world_10m.txt' with lines lt 3
+
+#set output "ice-my-zoom.png"
+#set xrange [-110:-80]
+#set yrange [75:80]
+#plot spatial_filter.'amsre.dat' using 2:1:4 with points palette pointtype 7 pointsize 3, \
+# 'world_10m.txt' with lines lt 3
+
+set output "ice-total-zoom.png"
 set xrange [-110:-80]
 set yrange [75:80]
-plot spatial_filter.'amsre.dat' using 2:1:3 with points palette pointtype 7 pointsize 3, \
+plot spatial_filter.'amsre.dat' using 2:1:($3+$4) with points palette pointtype 7 pointsize 3, \
  'world_10m.txt' with lines lt 3
+
+#set output "ice-fy-zoom.png"
+#set xrange [-110:-80]
+#set yrange [75:80]
+#plot spatial_filter.'amsre.dat' using 2:1:3 with points palette pointtype 7 pointsize 3, \
+# 'world_10m.txt' with lines lt 3
 
 set output "amsre.png"
 set xrange [0:0.3]

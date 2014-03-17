@@ -25,15 +25,26 @@ def gr_high(pr):
 	return 0.35 * pr - 0.0175
 
 def ice(pr, gr):
-	if (pr < 0.05 or pr > 0.25):
-		return ('NA', 'NA')
-	elif (gr >= gr_low(pr) and gr <= gr_high(pr)):
-		extent = 1.0 - ((pr-0.05) * 5.0)
-		gr_lower = gr_low(pr)
-		age = (gr - gr_lower) / (gr_high(pr) - gr_lower)
-		return (extent, age)
-	else:
-		return ('NA', 'NA')
+	F_0 = 2782.3
+	F_1 = -20044
+	F_2 = 19935
+	F_3 = 41660
+	M_0 = -690.38
+	M_1 = 14990
+	M_2 = -27579
+	M_3 = -43260
+	D_0 = 1648.2
+	D_1 = 7735.6
+	D_2 = -4112.2
+	D_3 = -10200
+	D=D_0+D_1*pr + D_2*gr + D_3*pr*gr
+	C_FY = (F_0 + F_1 * pr + F_2 * gr + F_3 * pr * gr) / D
+	C_MY = (M_0 + M_1 * pr + M_2 * gr + M_3 * pr * gr) / D
+	if (C_FY < 0 or C_FY > 1):
+		C_FY = 'NA'
+	if (C_MY < 0 or C_MY > 1):
+		C_MY = 'NA'
+	return (C_FY, C_MY)
 
 def parse(filename):
 	amsr = SD.SD(filename)
@@ -50,8 +61,8 @@ def parse(filename):
 			t_b_37v_rescaled = 0.01 * float(t_b_36_5v_grid[x][y]) + 327.68
 			gr_value = gr(t_b_37v_rescaled, t_b_19v_rescaled)
 			pr_value = pr(t_b_19v_rescaled, t_b_19h_rescaled)
-			extent, age = ice(pr_value, gr_value)
-			print latitude_grid[x][y], longitude_grid[x][y], extent, age
+			fy, my = ice(pr_value, gr_value)
+			print latitude_grid[x][y], longitude_grid[x][y], fy, my
 
 print '#lat long ice_extent ice_age'
 for f in os.listdir("."):
